@@ -13,9 +13,10 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 const server = new ApolloServer({
+  introspection: true,
+  playground: true,
   typeDefs,
   resolvers,
-
   context: authMiddleware,
 });
 
@@ -29,7 +30,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  // res.sendFile(path.join(__dirname, '../client/build/index.html'));
+  res.json({ message: "api working" })
 });
 
 db.once('open', () => {
